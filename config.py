@@ -20,10 +20,13 @@ ENABLE_SOUND = True
 MAX_TONE_COUNT = 10
 
 # Camera mode: "webcam" or "rtsp"
-CAMERA_MODE = "webcam"
+# For cloud deployment, use "rtsp" and set RTSP_URL environment variable
+import os
+CAMERA_MODE = os.getenv("CAMERA_MODE", "rtsp")
 
 # Example: "rtsp://username:password@192.168.1.100:554/stream"
-RTSP_URL = "rtsp://username:password@192.168.1.100:554/stream"
+# For Railway: Set this in Railway Variables tab
+RTSP_URL = os.getenv("RTSP_URL", "rtsp://username:password@192.168.1.100:554/stream")
 
 # Display settings
 DISPLAY_FPS = True

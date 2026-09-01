@@ -45,7 +45,7 @@
   <main>
     <div class="intro"><div><h1>Room watch.</h1><p class="sub">Real-time people count and movement events.</p></div><div class="actions"><button id="reset">Reset totals</button></div></div>
     <section class="dashboard">
-      <div class="camera"><img src="{{ url_for('video_feed') }}" alt="Live camera feed"><span class="camera-label">CAMERA / PEOPLE TRACKING</span></div>
+      <div class="camera"><img src="{{ url_for('video_feed') }}" alt="Live camera feed" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\"display:flex;align-items:center;justify-content:center;height:100%;color:#fff;text-align:center;padding:20px\"><div><h3 style=\"margin:0;color:#bb5546\">⚠️ Camera Not Available</h3><p style=\"margin:10px 0 0;font-size:14px;color:#bbb\">Configure RTSP_URL in Railway Variables:<br><code style=\"background:#1c2922;padding:5px 10px;border-radius:3px\">RTSP_URL=rtsp://...</code></p></div></div>'"><span class="camera-label">CAMERA / PEOPLE TRACKING</span></div>
       <div class="metrics">
         <div class="metric"><small>In frame now</small><div class="number" id="occupancy">0</div></div>
         <div class="metric"><small>Total entries</small><div class="number" id="entries">0</div></div>

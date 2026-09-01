@@ -11,20 +11,27 @@ app = Flask(__name__)
 system = PeopleOccupancySystem()
 frame_lock = threading.Lock()
 started = False
+camera_ready = False
 
 
 def ensure_started():
-    global started
+    global started, camera_ready
     if not started:
         with frame_lock:
             if not started:
-                system.initialize_camera()
-                system.initialize_components()
+                camera_ready = system.initialize_camera()
+                if camera_ready:
+                    system.initialize_components()
+                else:
+                    print("⚠️  Running without camera - configure RTSP_URL for cloud deployment")
+                    system.initialize_components()
                 started = True
 
 
 def read_processed_frame():
     ensure_started()
+    if not camera_ready or system.cap is None:
+        return None
     with frame_lock:
         ok, frame = system.cap.read()
         if not ok:

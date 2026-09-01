@@ -38,22 +38,29 @@ class PeopleOccupancySystem:
 
     def initialize_camera(self):
         """Open camera (webcam or RTSP)."""
-        if CAMERA_MODE == "webcam":
-            self.cap = cv2.VideoCapture(CAMERA_INDEX)
-            print(f"📷 Opened webcam (index {CAMERA_INDEX})")
+        try:
+            if CAMERA_MODE == "webcam":
+                self.cap = cv2.VideoCapture(CAMERA_INDEX)
+                print(f"📷 Opened webcam (index {CAMERA_INDEX})")
 
-        elif CAMERA_MODE == "rtsp":
-            self.cap = cv2.VideoCapture(RTSP_URL)
-            print(f"📷 Opened RTSP stream: {RTSP_URL}")
+            elif CAMERA_MODE == "rtsp":
+                self.cap = cv2.VideoCapture(RTSP_URL)
+                print(f"📷 Opened RTSP stream: {RTSP_URL}")
 
-        else:
-            raise ValueError(f"Invalid CAMERA_MODE: {CAMERA_MODE}")
+            else:
+                raise ValueError(f"Invalid CAMERA_MODE: {CAMERA_MODE}")
 
-        if not self.cap.isOpened():
-            raise RuntimeError("❌ Could not open camera")
+            if not self.cap.isOpened():
+                print("⚠️  Could not open camera. Make sure RTSP_URL is configured for cloud deployment.")
+                print(f"   Current RTSP_URL: {RTSP_URL}")
+                return False
 
-        # Optional: Set camera properties
-        self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Reduce latency
+            # Optional: Set camera properties
+            self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Reduce latency
+            return True
+        except Exception as e:
+            print(f"❌ Camera initialization error: {e}")
+            return False
 
     def initialize_components(self):
         """Initialize YOLO tracker, tone player, and counter."""
