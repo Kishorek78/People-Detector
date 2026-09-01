@@ -1,0 +1,18 @@
+[build]
+# Explicitly use Python
+providers = ["python"]
+
+[buildConfig.nixpkgsVersion]
+date = "2024-01-01"
+
+[buildConfig.nixpkgs]
+# Install system libraries for OpenCV headless
+install = [
+  "libxcb",
+  "libx11",
+  "libxext",
+  "libxrender",
+  "glib",
+  "libSM",
+  "libgomp"
+]

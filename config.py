@@ -13,15 +13,15 @@ PERSON_CLASS_ID = 0
 # Line position as percentage of frame height
 LINE_POSITION = 0.50
 
-# Audio
-ENABLE_SOUND = True
+# Audio - disable on cloud deployment (no audio devices)
+import os
+ENABLE_SOUND = os.getenv("ENABLE_SOUND", "false").lower() == "true"
 
 # Maximum occupancy allowed for tone mapping
 MAX_TONE_COUNT = 10
 
 # Camera mode: "webcam" or "rtsp"
 # For cloud deployment, use "rtsp" and set RTSP_URL environment variable
-import os
 CAMERA_MODE = os.getenv("CAMERA_MODE", "rtsp")
 
 # Example: "rtsp://username:password@192.168.1.100:554/stream"
